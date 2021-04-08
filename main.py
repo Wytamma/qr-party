@@ -15,7 +15,7 @@ SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
 if not SQLALCHEMY_DATABASE_URI:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///qr-party.db'
 elif "postgres://" in SQLALCHEMY_DATABASE_URI:
-    SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://", 1)
+    SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://", 1)
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.secret_key = 'super_secret_key' # change this (although only using it for flash)
 db = SQLAlchemy(app)
