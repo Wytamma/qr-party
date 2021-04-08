@@ -65,6 +65,11 @@ def contact():
     return render_template('contact.html')
 
 
+@app.route('/plot')
+def plot():
+    guests = Guest.query.all()
+    return render_template('plot.html', guests=guests)
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=8000)
