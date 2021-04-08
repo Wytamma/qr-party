@@ -1,0 +1,12 @@
+{% extends "main.html" %}
+{% block content %}
+<form method="post">
+
+  <div class="mb-3">
+    <label for="InputName" class="form-label">Name</label>
+    <input type="text" name=name class="form-control" id="InputName" aria-describedby="nameHelp" required>
+    <div id="nameHelp" class="form-text">Please sign in each guest indivdually</div>
+  </div>
+  <button type="submit" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Sign in 🦚</button>
+</form>
+{% endblock %}
