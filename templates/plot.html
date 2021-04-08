@@ -21,23 +21,11 @@
     {% for guest in guests %}
       ['{{ guest.id }}', 
       '{{ guest.name }}', 
-      new Date({{ guest.time_in.year }}, 
-        {{ guest.time_in.month - 1 }}, 
-        {{ guest.time_in.day }}, 
-        {{ guest.time_in.hour }}, 
-        {{ guest.time_in.minute }}, 
-        {{ guest.time_in.second }}
-        ),
+      new Date("{{ guest.time_in.strftime('%Y/%m/%d %H:%M:%S UTC') }}"),
       {% if guest.at_party %} 
-      new Date()
+        new Date()
       {% else %}
-      new Date({{ guest.time_out.year }}, 
-        {{ guest.time_out.month - 1 }}, 
-        {{ guest.time_out.day }}, 
-        {{ guest.time_out.hour }}, 
-        {{ guest.time_out.minute }}, 
-        {{ guest.time_out.second }}
-        )
+        new Date("{{ guest.time_out.strftime('%Y/%m/%d %H:%M:%S UTC') }}")
       {% endif %}
       ],
     {% endfor %}
