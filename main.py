@@ -39,7 +39,7 @@ def home():
 
 @app.route('/signin')
 def signin():
-    return render_template('sign.html')
+    return render_template('QR.html')
 
 @app.route('/arrived', methods=['GET', 'POST'])
 def arrived():
