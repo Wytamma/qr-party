@@ -6,10 +6,15 @@ from flask_sqlalchemy import SQLAlchemy
 import random
 import logging
 import json
-from datetime import datetime
+from datetime import datetime, timezone
+import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///qr-party.db'
+
+SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+if not SQLALCHEMY_DATABASE_URI:
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///qr-party.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.secret_key = 'super_secret_key' # change this (although only using it for flash)
 db = SQLAlchemy(app)
 
@@ -38,7 +43,7 @@ def signin():
 def arrived():
     if request.method == 'POST':
         name = request.form['name']
-        guest = Guest(name=name, at_party=True, time_in=datetime.now())
+        guest = Guest(name=name, at_party=True, time_in=datetime.now(timezone.utc))
         db.session.add(guest)
         db.session.commit()
         flash(f'You successfully signed in as {name}')
@@ -51,7 +56,7 @@ def leaving():
         guest_id = request.form['name']
         guest = Guest.query.filter_by(id=guest_id).first()
         guest.at_party = False
-        guest.time_out = datetime.now()
+        guest.time_out = datetime.now(timezone.utc)
         db.session.commit()
         flash(f'Goodbye {guest.name}!')
         #session['name'] = name
